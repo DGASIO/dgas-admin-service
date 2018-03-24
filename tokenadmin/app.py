@@ -8,8 +8,8 @@ import os
 import functools
 from urllib.parse import urlencode
 
-from asyncpg.database import prepare_database, create_pool
-from asyncpg.log import configure_logger, log as asyncpg_log
+from tokenservices.database import prepare_database, create_pool
+from tokenservices.log import configure_logger, log as tokenservices_log
 
 from sanic import Sanic
 from sanic.exceptions import SanicException
@@ -18,9 +18,9 @@ from sanic.response import html, json as json_response, redirect
 from sanic.request import Request
 from jinja2 import Environment, FileSystemLoader
 
-from dgasio.utils import parse_int
+from tokenservices.utils import parse_int
 
-asyncpg_log.setLevel(logging.DEBUG)
+tokenservices_log.setLevel(logging.DEBUG)
 configure_logger(sanic_log)
 
 ADMIN_SERVICE_DATABASE_URL = os.getenv("DATABASE_URL")
