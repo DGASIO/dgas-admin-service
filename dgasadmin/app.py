@@ -1075,6 +1075,7 @@ async def update_categories(request, current_user):
     to_env = request.form.get('to', None)
     dgas_ids = request.form.get('dgas_ids', None)
     apps = request.form.get('apps', None)
+    users = request.form.get('users', None)
 
     dgas_ids = set(re.findall("0x[a-fA-f0-9]{40}", dgas_ids))
 
@@ -1086,6 +1087,9 @@ async def update_categories(request, current_user):
             user_rows = list(users)
         else:
             user_rows = []
+        if users == 'on':
+            users = await con.fetch("SELECT * FROM users WHERE is_app = FALSE")
+            user_rows.extend(list(users))
         if len(dgas_ids) > 0:
             users = await con.fetch("SELECT * FROM users WHERE dgas_id = ANY($1)", dgas_ids)
             user_rows.extend(list(users))
