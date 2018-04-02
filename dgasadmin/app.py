@@ -1069,7 +1069,7 @@ async def update_categories(request, conf, current_user):
 
 @app.route("/migrate", methods=["POST"])
 @requires_login
-async def update_categories(request, current_user):
+async def migrate_users(request, current_user):
 
     from_env = request.form.get('from', None)
     to_env = request.form.get('to', None)
@@ -1077,7 +1077,10 @@ async def update_categories(request, current_user):
     apps = request.form.get('apps', None)
     users = request.form.get('users', None)
 
-    dgas_ids = set(re.findall("0x[a-fA-f0-9]{40}", dgas_ids))
+    if dgas_ids:
+        dgas_ids = set(re.findall("0x[a-fA-f0-9]{40}", dgas_ids))
+    else:
+        dgas_ids = set()
 
     print("MIGRATING USERS FROM '{}' TO '{}'".format(from_env, to_env))
 
