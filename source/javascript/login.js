@@ -1,7 +1,7 @@
 import qrImage from 'qr-image';
 import http from './http.js';
 
-const id_service_url = "https://dgas-id-service.herokuapp.com";
+const id_service_url = "https://identity-internal-service2.herokuapp.com";
 
 // TODO docs on how to use as image
 const getQRDataURI = (data) => {

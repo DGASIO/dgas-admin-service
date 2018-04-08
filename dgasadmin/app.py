@@ -103,14 +103,18 @@ def add_config(fn):
 
 async def prepare_configs(before_start, app, loop):
     app.configs = {}
+    print('prepare_configs')
 
     app.pool = await prepare_database({'dsn': ADMIN_SERVICE_DATABASE_URL})
 
+
+    print('mainnet')
     # mainnet
+    print('MAINNET_ETH_SERVICE_DATABASE_URL=', MAINNET_ETH_SERVICE_DATABASE_URL)
     mainnet_eth = await create_pool(MAINNET_ETH_SERVICE_DATABASE_URL, min_size=1, max_size=3)
-    mainnet_id = await create_pool(MAINNET_ID_SERVICE_DATABASE_URL, min_size=1, max_size=3)
+    mainnet_id = None # await create_pool(MAINNET_ID_SERVICE_DATABASE_URL, min_size=1, max_size=3)
     mainnet_dir = None # await create_pool(MAINNET_DIR_SERVICE_DATABASE_URL, min_size=1, max_size=3)
-    mainnet_rep = await create_pool(MAINNET_REP_SERVICE_DATABASE_URL, min_size=1, max_size=3)
+    mainnet_rep = None # await create_pool(MAINNET_REP_SERVICE_DATABASE_URL, min_size=1, max_size=3)
     app.configs['mainnet'] = Config("mainnet", mainnet_eth, mainnet_id, mainnet_dir, mainnet_rep,
                                     MAINNET_ETHEREUM_NODE_URL,
                                     MAINNET_ID_SERVICE_URL,
@@ -118,6 +122,7 @@ async def prepare_configs(before_start, app, loop):
                                     MAINNET_DIR_SERVICE_URL,
                                     MAINNET_REP_SERVICE_URL)
 
+    print('dev')
     # dev
     dev_eth = await create_pool(DEV_ETH_SERVICE_DATABASE_URL, min_size=1, max_size=3)
     dev_id = await create_pool(DEV_ID_SERVICE_DATABASE_URL, min_size=1, max_size=3)
@@ -130,6 +135,7 @@ async def prepare_configs(before_start, app, loop):
                                 DEV_DIR_SERVICE_URL,
                                 DEV_REP_SERVICE_URL)
 
+    print('internal')
     # internal
     internal_eth = await create_pool(INTERNAL_ETH_SERVICE_DATABASE_URL, min_size=1, max_size=3)
     internal_id = await create_pool(INTERNAL_ID_SERVICE_DATABASE_URL, min_size=1, max_size=3)
